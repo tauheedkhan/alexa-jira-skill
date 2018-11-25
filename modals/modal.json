@@ -1,0 +1,151 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "jira",
+            "intents": [
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AssignIssue",
+                    "slots": [
+                        {
+                            "name": "jiraid",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "status",
+                            "type": "status"
+                        },
+                        {
+                            "name": "name",
+                            "type": "names"
+                        }
+                    ],
+                    "samples": [
+                        "assign {name} jira ticket {jiraid}",
+                        "assign jira id {jiraid}   to {name}",
+                        "assign {name} jira id {jiraid}",
+                        "assign jira ticket {jiraid} to {name}",
+                        "assign issue {jiraid} to {name}"
+                    ]
+                },
+                {
+                    "name": "WhoAMI",
+                    "slots": [],
+                    "samples": [
+                        "tell my my name",
+                        "tell me my email id",
+                        "tell about me",
+                        "who am I "
+                    ]
+                },
+                {
+                    "name": "IssueCount",
+                    "slots": [],
+                    "samples": [
+                        "what are my issues",
+                        "tell me my issues",
+                        "tell me the issue count",
+                        "how many issues are assigned to me"
+                    ]
+                },
+                {
+                    "name": "IssueCountDetails",
+                    "slots": [],
+                    "samples": [
+                        "sure",
+                        "go ahead",
+                        "tell me",
+                        "yes please",
+                        "yest tell me more",
+                        "yest tell me",
+                        "yes"
+                    ]
+                },
+                {
+                    "name": "ChangeStatus",
+                    "slots": [
+                        {
+                            "name": "status",
+                            "type": "status"
+                        },
+                        {
+                            "name": "ticket",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "move jira id {ticket} from current to {status}",
+                        "can you change the status of jira id {ticket} to {status}",
+                        "changes the status of jira id {ticket} to {status}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "status",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Done"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "In Progress"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "To Do"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "names",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "admin"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "tauheed"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sonia"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "simit tomar"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
