@@ -1,9 +1,9 @@
-const responseBuilder = require('./response')
-const {req: assignRequest} = require('./assign')
-const {req: whomiRequest} = require('./whoAmI')
-const {req: issueCountRequest} = require('./issueCount')
-const {req: issueCountDetailsRequest} = require('./issueCountDetails')
-const {req: changeStatusRequest} = require('./changeStatus')
+const responseBuilder = require('./src/response')
+const {req: assignRequest} = require('./src/assign')
+const {req: whomiRequest} = require('./src/whoAmI')
+const {req: issueCountRequest} = require('./src/issueCount')
+const {req: issueCountDetailsRequest} = require('./src/issueCountDetails')
+const {req: changeStatusRequest} = require('./src/changeStatus')
 
 const projectKey = 'WUNJHB'
 

@@ -1,24 +1,25 @@
 {
-  "name": "alexa-skill",
+  "name": "alexa-jira-skill",
   "version": "1.0.0",
-  "description": "Simple alexa greeting skill",
+  "description": "Alexa Jira skill prototype",
   "main": "index.js",
   "scripts": {
-    "test": "lambda-local -l lambda/index.js -h handler -e test/event.json"
+    "test": "lambda-local -l index.js -h handler -e test/event.json",
+    "publish": "bash publish.sh"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tauheedkhan/alexa-skill.git"
+    "url": "git+https://github.com/tauheedkhan/alexa-jira-skill.git"
   },
   "keywords": [
-    "alexa"
+    "alexa","jira","jira-skill"
   ],
   "author": "tauheed khan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tauheedkhan/alexa-skill/issues"
+    "url": "https://github.com/tauheedkhan/alexa-jira-skill/issues"
   },
-  "homepage": "https://github.com/tauheedkhan/alexa-skill#readme",
+  "homepage": "https://github.com/tauheedkhan/alexa-jira-skill#readme",
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
