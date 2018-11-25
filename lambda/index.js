@@ -3,6 +3,7 @@ const {req: assignRequest} = require('./assign')
 const {req: whomiRequest} = require('./whoAmI')
 const {req: issueCountRequest} = require('./issueCount')
 const {req: issueCountDetailsRequest} = require('./issueCountDetails')
+const {req: changeStatusRequest} = require('./changeStatus')
 
 const projectKey = 'WUNJHB'
 
@@ -40,6 +41,15 @@ exports.handler = (event, context) => {
       issueCountRequest(null, options, context)
     } else if (request.intent.name === 'IssueCountDetails') {
       issueCountDetailsRequest(null, context, session)
+    } else if (request.intent.name === 'ChangeStatus') {
+      const jiraId = request.intent.slots.ticket.value
+      const status = request.intent.slots.status.value
+      const opts = {
+        projectKey,
+        jiraId,
+        status
+      }
+      changeStatusRequest(opts, context, session)
     } else context.fail('Unknown Intent')
   } else if (request.type === 'SessionEndedRequest') {
 

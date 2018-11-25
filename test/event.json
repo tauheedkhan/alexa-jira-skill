@@ -18,14 +18,22 @@
           "name": "FirstName",
           "value": "3"
         },
+        "ticket": {
+          "name": "FirstName",
+          "value": "3"
+        },
         "name": {
           "name": "FirstName",
           "value": "simittomar8"
+        },
+        "status": {
+          "name": "status",
+          "value": "Done"
         }
       },
-      "name": "LaunchRequest"
+      "name": "ChangeStatus"
     },
-    "type": "LaunchRequest",
+    "type": "IntentRequest",
     "requestId": "request5678"
   }
 }
