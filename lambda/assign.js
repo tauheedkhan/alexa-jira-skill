@@ -1,5 +1,6 @@
 const request = require('request-promise')
 const responseBuilder = require('./response')
+const assigneeMapper = require('./assigneeMapper')
 
 const options = (opts) => ({
   method: 'PUT',
@@ -11,15 +12,16 @@ const options = (opts) => ({
     'Content-Type': 'application/json',
     'Authorization': 'Basic dGF1aGVlZGtoYW4yNjExQGdtYWlsLmNvbTpUZXRyYXRlY0Ay'
   },
-  body: {'name': opts.assignee}
+  body: {'name': opts.assigneeId}
 })
 
 const alexaResponse = (opts) => ({
-  speechText: `Jira ticket ${opts.jiraId} has been assigned to ${opts.assignee}`,
+  speechText: `Jira ticket ${opts.jiraId} has been assigned to ${opts.assigneeId}`,
   endSession: true
 })
 
 const req = (opts, context) => {
+  opts.assigneeId = assigneeMapper[opts.assignee.toLowerCase()]
   request(options(opts))
     .then(response => {
       context.succeed(responseBuilder(alexaResponse(opts)))
@@ -38,4 +40,3 @@ module.exports = {
   alexaResponse,
   req
 }
-
