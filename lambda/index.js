@@ -1,12 +1,17 @@
 const responseBuilder = require('./response')
 const {req: assignRequest} = require('./assign')
 const {req: whomiRequest} = require('./whoAmI')
-const {req: issueCountRequest} = require('./assignedToUser')
+const {req: issueCountRequest} = require('./issueCount')
+const {req: issueCountDetailsRequest} = require('./issueCountDetails')
 
 const projectKey = 'WUNJHB'
 
 exports.handler = (event, context) => {
-  const request = event.request
+  var request = event.request
+  var session = event.session
+  if (!event.session.attributes) {
+    event.session.attributes = {}
+  }
 
   if (request.type === 'LaunchRequest') {
     const options = {
@@ -28,7 +33,13 @@ exports.handler = (event, context) => {
     } else if (request.intent.name === 'WhoAMI') {
       whomiRequest(null, context)
     } else if (request.intent.name === 'IssueCount') {
-      issueCountRequest(null, context)
+      let options = {}
+      options.session = session
+      options.session.attributes.IssueCount = true
+      options.endSession = false
+      issueCountRequest(null, options, context)
+    } else if (request.intent.name === 'IssueCountDetails') {
+      issueCountDetailsRequest(null, context, session)
     } else context.fail('Unknown Intent')
   } else if (request.type === 'SessionEndedRequest') {
 

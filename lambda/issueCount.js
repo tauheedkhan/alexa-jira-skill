@@ -3,7 +3,7 @@ const responseBuilder = require('./response')
 
 const options = () => ({
   method: 'GET',
-  uri: `https://jira-alexa.atlassian.net/rest/api/3/myself`,
+  uri: `https://jira-alexa.atlassian.net/rest/api/3/search?jql=assignee=currentuser()`,
   json: true,
   resolveWithFullResponse: true,
   headers: {
@@ -13,15 +13,23 @@ const options = () => ({
   }
 })
 
-const alexaResponse = (opts) => ({
-  speechText: `Your display name is ${opts.displayName}. and email id is ${opts.emailAddress}`,
-  endSession: true
-})
+const alexaResponse = (opts, alexaOptions) => {
+  if (opts.total === 0) {
+    const res = {
+      speechText: `There are no issues assigned to you`,
+      endSession: true
+    }
+    return res
+  }
 
-const req = (opts, context) => {
+  alexaOptions.speechText = `There are total ${opts.total} issues assigned to you. Do you want to know the issue id`
+  return alexaOptions
+}
+
+const req = (opts, alexaOptions, context) => {
   request(options())
     .then(response => {
-      context.succeed(responseBuilder(alexaResponse(response.body)))
+      context.succeed(responseBuilder(alexaResponse(response.body, alexaOptions)))
     })
     .catch(err => {
       const alexaRes = {

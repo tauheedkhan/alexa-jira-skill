@@ -23,9 +23,9 @@
           "value": "simittomar8"
         }
       },
-      "name": "AssignIssue"
+      "name": "LaunchRequest"
     },
-    "type": "IntentRequest",
+    "type": "LaunchRequest",
     "requestId": "request5678"
   }
 }

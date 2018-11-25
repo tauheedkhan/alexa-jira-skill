@@ -5,8 +5,8 @@ module.exports = (options) => {
     },
     'response': {
       'outputSpeech': {
-        'type': 'PlainText',
-        'text': options.speechText
+        'type': 'SSML',
+        'text': `<speak>${options.speechText}</speak>`
       },
       'shouldEndSession': options.endSession
     }
@@ -21,6 +21,9 @@ module.exports = (options) => {
     }
   }
 
+  if (options.session && options.session.attributes) {
+    response.sessionAttributes = options.session.attributes
+  }
+
   return response
 }
-

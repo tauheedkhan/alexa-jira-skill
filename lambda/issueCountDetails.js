@@ -13,10 +13,14 @@ const options = () => ({
   }
 })
 
-const alexaResponse = (opts) => ({
-  speechText: `There are total ${opts.total} issues assigned to you`,
-  endSession: true
-})
+const alexaResponse = (opts) => {
+  const issues = opts.issues.map(item => item.key)
+  const response = {
+    speechText: `Jira ID assigned to you,  are, <say-as interpret-as="spell-out">${issues.toString()}</say-as>`,
+    endSession: true}
+
+  return response
+}
 
 const req = (opts, context) => {
   request(options())
@@ -35,4 +39,3 @@ const req = (opts, context) => {
 module.exports = {
   req
 }
-
