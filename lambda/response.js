@@ -6,7 +6,7 @@ module.exports = (options) => {
     'response': {
       'outputSpeech': {
         'type': 'SSML',
-        'text': `<speak>${options.speechText}</speak>`
+        'ssml': `<speak>${options.speechText}</speak>`
       },
       'shouldEndSession': options.endSession
     }
