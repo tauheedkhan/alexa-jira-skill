@@ -50,10 +50,18 @@ exports.handler = (event, context) => {
         status
       }
       changeStatusRequest(opts, context, session)
-    } else context.fail('Unknown Intent')
+    } else {
+      context.succeed(responseBuilder({
+        speechText: 'Sorry I dont understand, can you repeat that ?',
+        endSession: false
+      }))
+    }
   } else if (request.type === 'SessionEndedRequest') {
 
   } else {
-    context.fail('Unknow intent')
+    context.succeed(responseBuilder({
+      speechText: 'Sorry I dont understand, can you repeat that ?',
+      endSession: false
+    }))
   }
 }
