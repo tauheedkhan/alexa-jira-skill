@@ -1,18 +1,22 @@
 const request = require('request-promise')
+require('request-promise').debug = true
 const responseBuilder = require('./response')
+const auth = require('./authorization')
+
+const DOMAIN = process.env.DOMAIN
 
 const options = () => ({
   method: 'GET',
-  uri: `https://jira-alexa.atlassian.net/rest/api/3/myself`,
+  uri: `https://${DOMAIN}/rest/api/3/myself`,
   json: true,
   resolveWithFullResponse: true,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': 'Basic dGF1aGVlZGtoYW4yNjExQGdtYWlsLmNvbTpUZXRyYXRlY0Ay'
+    'Authorization': `Basic ${auth}`
   }
 })
-
+console.log('WHO AM I OPTIONS :: ', options)
 const alexaResponse = (opts) => ({
   speechText: `Your display name is ${opts.displayName}. and email id is ${opts.emailAddress}`,
   endSession: true

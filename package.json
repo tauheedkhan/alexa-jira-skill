@@ -12,7 +12,9 @@
     "url": "git+https://github.com/tauheedkhan/alexa-jira-skill.git"
   },
   "keywords": [
-    "alexa","jira","jira-skill"
+    "alexa",
+    "jira",
+    "jira-skill"
   ],
   "author": "tauheed khan",
   "license": "MIT",
@@ -30,6 +32,8 @@
     "lambda-local": "^1.5.1"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
+    "dotenv": "^6.1.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }

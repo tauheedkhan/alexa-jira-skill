@@ -1,3 +1,4 @@
+require('dotenv').config()
 const responseBuilder = require('./src/response')
 const {req: assignRequest} = require('./src/assign')
 const {req: whomiRequest} = require('./src/whoAmI')
@@ -5,9 +6,10 @@ const {req: issueCountRequest} = require('./src/issueCount')
 const {req: issueCountDetailsRequest} = require('./src/issueCountDetails')
 const {req: changeStatusRequest} = require('./src/changeStatus')
 
-const projectKey = 'WUNJHB'
+const projectKey = process.env.PROJECT_KEY
 
 exports.handler = (event, context) => {
+  console.log('EVENT :::: ', JSON.stringify(event, null, 2))
   var request = event.request
   var session = event.session
   if (!event.session.attributes) {
