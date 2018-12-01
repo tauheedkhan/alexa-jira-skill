@@ -17,7 +17,16 @@
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": []
+                    "samples": [
+                        "no i am good",
+                        "naah",
+                        "that is all",
+                        "thats all",
+                        "thats it",
+                        "no thank you",
+                        "no thanks",
+                        "no"
+                    ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
@@ -28,11 +37,7 @@
                     "slots": [
                         {
                             "name": "jiraid",
-                            "type": "AMAZON.NUMBER"
-                        },
-                        {
-                            "name": "status",
-                            "type": "status"
+                            "type": "jiraid"
                         },
                         {
                             "name": "name",
@@ -41,7 +46,7 @@
                     ],
                     "samples": [
                         "assign {name} jira ticket {jiraid}",
-                        "assign jira id {jiraid}   to {name}",
+                        "assign jira id {jiraid}  to {name}",
                         "assign {name} jira id {jiraid}",
                         "assign jira ticket {jiraid} to {name}",
                         "assign issue {jiraid} to {name}"
@@ -89,7 +94,7 @@
                         },
                         {
                             "name": "ticket",
-                            "type": "AMAZON.NUMBER"
+                            "type": "jiraid"
                         }
                     ],
                     "samples": [
@@ -141,6 +146,76 @@
                         {
                             "name": {
                                 "value": "simit tomar"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "jiraid",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "13"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "12"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "11"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "10"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "9"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "8"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "7"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "6"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "5"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "4"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "3"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1"
                             }
                         }
                     ]
