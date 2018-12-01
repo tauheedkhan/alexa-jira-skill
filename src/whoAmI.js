@@ -18,7 +18,7 @@ const options = () => ({
 })
 console.log('WHO AM I OPTIONS :: ', options)
 const alexaResponse = (opts) => ({
-  speechText: `Your display name is ${opts.displayName}. and email id is ${opts.emailAddress}`,
+  speechText: `Your display name is ${opts.displayName}. and email id is ${opts.emailAddress}, If this is not you then please change your Jira login from alexa app ? `,
   endSession: true
 })
 

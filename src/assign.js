@@ -20,21 +20,24 @@ const options = (opts) => ({
 })
 
 console.log('ASSIGN OPTIONS :: ', options)
-const alexaResponse = (opts) => ({
-  speechText: `Jira ticket ${opts.jiraId} has been assigned to ${opts.assigneeId}`,
-  endSession: true
+const alexaResponse = (opts, session) => ({
+  speechText: `Jira ticket ${opts.jiraId} has been assigned to ${opts.assigneeId}, Any thing else I can help you with ?`,
+  endSession: false,
+  session
 })
 
-const req = (opts, context) => {
+const req = (opts, context, session) => {
   opts.assigneeId = assigneeMapper[opts.assignee.toLowerCase()]
   request(options(opts))
     .then(response => {
-      context.succeed(responseBuilder(alexaResponse(opts)))
+      context.succeed(responseBuilder(alexaResponse(opts, session)))
     })
-    .catch(err => {
+    .catch(() => {
+      const text = (session.attributes.jiraid) ? `Are you trying to do something with jira id ${session.attributes.jiraid}` : `I dont get it, what was that ?`
       const alexaRes = {
-        speechText: err.errors.assignee,
-        endSession: false
+        speechText: text,
+        endSession: false,
+        session
       }
       context.succeed(responseBuilder(alexaRes))
     })

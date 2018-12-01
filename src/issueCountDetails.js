@@ -18,19 +18,21 @@ const options = () => ({
 })
 
 console.log('ISSUE COUNT DETAILS OPTIONS :: ', options)
-const alexaResponse = (opts) => {
+const alexaResponse = (opts, session) => {
   const issues = opts.issues.map(item => item.key)
+  session.attributes.jiraid = issues[0].split('-')[1]
   const response = {
-    speechText: `Jira ID assigned to you,  are, <say-as interpret-as="spell-out">${issues.toString()}</say-as>`,
-    endSession: true}
+    speechText: `Jira ID assigned to you,  are, <say-as interpret-as="spell-out">${issues.toString()}</say-as> . Anything else I can help you with ?`,
+    endSession: false,
+    session}
 
   return response
 }
 
-const req = (opts, context) => {
+const req = (opts, context, session) => {
   request(options())
     .then(response => {
-      context.succeed(responseBuilder(alexaResponse(response.body)))
+      context.succeed(responseBuilder(alexaResponse(response.body, session)))
     })
     .catch(err => {
       const alexaRes = {

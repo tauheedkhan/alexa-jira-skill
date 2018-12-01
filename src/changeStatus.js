@@ -21,20 +21,27 @@ const options = (opts) => ({
   }}
 })
 console.log('CHANGE STATUS OPTIONS :: ', options)
-const alexaResponse = (opts) => ({
-  speechText: `Status of Jira id,  ${opts.jiraId},  has been changed to ${opts.status}`,
-  endSession: true
+const alexaResponse = (opts, session) => ({
+  speechText: `Status of Jira id,  ${opts.jiraId},  has been changed to ${opts.status}, Anything else I can help you with ?`,
+  endSession: false,
+  session
 })
 
-const req = (opts, context) => {
+const req = (opts, context, session) => {
   const transition = getTransition[opts.status.toLowerCase()]
   opts.transition = transition
   request(options(opts))
     .then(response => {
-      context.succeed(responseBuilder(alexaResponse(opts)))
+      context.succeed(responseBuilder(alexaResponse(opts, session)))
     })
-    .catch(err => {
-      context.fail(`Some error occured : ${err}`)
+    .catch(() => {
+      const text = (session.attributes.jiraid) ? `Are you trying to do something with jira id ${session.attributes.jiraid}` : `I dont get it, what was that ?`
+      const alexaRes = {
+        speechText: text,
+        endSession: false,
+        session
+      }
+      context.succeed(responseBuilder(alexaRes))
     })
 }
 

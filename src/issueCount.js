@@ -27,7 +27,7 @@ const alexaResponse = (opts, alexaOptions) => {
     return res
   }
 
-  alexaOptions.speechText = `There are total ${opts.total} issues assigned to you. Do you want to know the issue id`
+  alexaOptions.speechText = `There are total ${opts.total} issues assigned to you. Do you want to know the jira id`
   return alexaOptions
 }
 
