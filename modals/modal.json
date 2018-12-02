@@ -5,7 +5,12 @@
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
-                    "samples": []
+                    "samples": [
+                        "can u help me",
+                        "how can you help me",
+                        "what all can you do for me",
+                        "I need help"
+                    ]
                 },
                 {
                     "name": "AMAZON.CancelIntent",
@@ -18,6 +23,9 @@
                 {
                     "name": "AMAZON.StopIntent",
                     "samples": [
+                        "no thats all",
+                        "that'll be all",
+                        "that will be all",
                         "no i am good",
                         "naah",
                         "that is all",
@@ -45,11 +53,19 @@
                         }
                     ],
                     "samples": [
-                        "assign {name} jira ticket {jiraid}",
+                        "modify the assignee of this issue from current to {name}",
+                        "change the assignee of this issue from current to {name}",
                         "assign jira id {jiraid}  to {name}",
                         "assign {name} jira id {jiraid}",
-                        "assign jira ticket {jiraid} to {name}",
-                        "assign issue {jiraid} to {name}"
+                        "assign ticket {jiraid} to {name}",
+                        "assign it to {name}",
+                        "assign this to {name}",
+                        "assign this issue to {name}",
+                        "please assign jira id {jiraid}  to {name}",
+                        "please assign {name} jira id {jiraid}",
+                        "please assign ticket {jiraid} to {name}",
+                        "can you please assign this issue to {name}",
+                        "can you please assign it to {name}"
                     ]
                 },
                 {
@@ -66,6 +82,10 @@
                     "name": "IssueCount",
                     "slots": [],
                     "samples": [
+                        "is there any issue assigned to me",
+                        "Are there any issue assigned to me",
+                        "how many tickets are assigned to me",
+                        "are there any tickets assigned to me",
                         "what are my issues",
                         "tell me my issues",
                         "tell me the issue count",
@@ -93,14 +113,46 @@
                             "type": "status"
                         },
                         {
-                            "name": "ticket",
+                            "name": "jiraid",
                             "type": "jiraid"
                         }
                     ],
                     "samples": [
-                        "move jira id {ticket} from current to {status}",
-                        "can you change the status of jira id {ticket} to {status}",
-                        "changes the status of jira id {ticket} to {status}"
+                        "move jira id {jiraid} from current to {status}",
+                        "can you change the status of jira id {jiraid} to {status}",
+                        "changes the status of jira id {jiraid} to {status}"
+                    ]
+                },
+                {
+                    "name": "repeat",
+                    "slots": [
+                        {
+                            "name": "jiraid",
+                            "type": "jiraid"
+                        },
+                        {
+                            "name": "name",
+                            "type": "names"
+                        }
+                    ],
+                    "samples": [
+                        "jira ticket is {jiraid}",
+                        "jira issue is {jiraid}",
+                        "jira id is {jiraid}",
+                        "name is {name}",
+                        "yeah the name is {name}"
+                    ]
+                },
+                {
+                    "name": "AssignRepeat",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "names"
+                        }
+                    ],
+                    "samples": [
+                        "add by the person {name}"
                     ]
                 }
             ],

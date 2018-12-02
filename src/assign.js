@@ -21,7 +21,7 @@ const options = (opts) => ({
 
 console.log('ASSIGN OPTIONS :: ', options)
 const alexaResponse = (opts, session) => ({
-  speechText: `Jira ticket ${opts.jiraId} has been assigned to ${opts.assigneeId}, Any thing else I can help you with ?`,
+  speechText: `Jeera ticket ${opts.jiraId} has been assigned to ${opts.assigneeId}, Any thing else I can help you with ?`,
   endSession: false,
   session
 })
@@ -30,13 +30,12 @@ const req = (opts, context, session) => {
   opts.assigneeId = assigneeMapper[opts.assignee]
   request(options(opts))
     .then(response => {
-      session.attributes.intent = null
+      delete session.attributes.intent
       context.succeed(responseBuilder(alexaResponse(opts, session)))
     })
     .catch(() => {
-      const text = `There was a problem, can you repeat jira id please ?`
       const alexaRes = {
-        speechText: text,
+        speechText: `There was a problem, can you repeat jeera id please ?`,
         endSession: false,
         session
       }

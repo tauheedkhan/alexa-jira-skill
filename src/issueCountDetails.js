@@ -22,7 +22,7 @@ const alexaResponse = (opts, session) => {
   const issues = opts.issues.map(item => item.key)
   session.attributes.jiraid = issues[0].split('-')[1]
   const response = {
-    speechText: `Jira ID assigned to you,  are, <say-as interpret-as="spell-out">${issues.toString()}</say-as> . Anything else I can help you with ?`,
+    speechText: `Jeera ID assigned to you,  are, <say-as interpret-as="spell-out">${issues.toString()}</say-as> . Anything else I can help you with ?`,
     endSession: false,
     session}
 
@@ -32,6 +32,7 @@ const alexaResponse = (opts, session) => {
 const req = (opts, context, session) => {
   request(options())
     .then(response => {
+      delete session.attributes.intent
       context.succeed(responseBuilder(alexaResponse(response.body, session)))
     })
     .catch(err => {

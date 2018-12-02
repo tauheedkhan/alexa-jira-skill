@@ -18,23 +18,27 @@ const options = () => ({
 })
 
 console.log('ISSUE COUNT OPTIONS :: ', options)
-const alexaResponse = (opts, alexaOptions) => {
-  if (opts.total === 0) {
+const alexaResponse = (body, session) => {
+  if (body.total === 0) {
     const res = {
-      speechText: `There are no issues assigned to you`,
-      endSession: true
+      speechText: `There are no issues assigned to you. Can I help you with any thing else ?`,
+      endSession: false
     }
     return res
   }
-
-  alexaOptions.speechText = `There are total ${opts.total} issues assigned to you. Do you want to know the jira id`
-  return alexaOptions
+  const response = {
+    speechText: `There are total ${body.total} issues assigned to you. Do you want to know the jeera id`,
+    endSession: false,
+    session
+  }
+  return response
 }
 
-const req = (opts, alexaOptions, context) => {
+const req = (context, session) => {
   request(options())
     .then(response => {
-      context.succeed(responseBuilder(alexaResponse(response.body, alexaOptions)))
+      delete session.attributes.intent
+      context.succeed(responseBuilder(alexaResponse(response.body, session)))
     })
     .catch(err => {
       const alexaRes = {

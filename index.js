@@ -19,18 +19,24 @@ exports.handler = (event, context) => {
 
   if (request.type === 'LaunchRequest') {
     const options = {
-      speechText: 'Welcome to Jira skill.',
+      speechText: 'Welcome to Jeera.',
       repromptText: 'You can say for example, how many tickets are assigned to me',
       endSession: false
     }
     context.succeed(responseBuilder(options))
   } else if (request.type === 'IntentRequest') {
-    if (request.intent.name === 'AMAZON.FallbackIntent') {
+    if (request.intent.name === 'AMAZON.StopIntent') {
+      context.succeed(responseBuilder({
+        speechText: 'Good Bye !!, All the best for your presentation !!',
+        endSession: true
+      }))
+    } else if (!session.attributes.intent && request.intent.name === 'AMAZON.FallbackIntent') {
+      delete session.attributes.intent
       context.succeed(responseBuilder({
         speechText: 'Sorry I dont understand, can you repeat that ?',
         endSession: false
       }))
-    } else if (session.attributes.intent === 'AssignIssue' || request.intent.name === 'AssignIssue') {
+    } else if (session.attributes.intent === 'AssignIssue' || request.intent.name === 'AssignIssue' || request.intent.name === 'AssignRepeat') {
       if (!request.intent.slots.jiraid) {
         request.intent.slots.jiraid = {}
       }
@@ -43,7 +49,6 @@ exports.handler = (event, context) => {
       console.log('assignee', assignee)
       console.log('getAssignee', getAssignee[assignee])
       if (!getAssignee[assignee]) {
-        console.log('Entered If....')
         session.attributes.intent = 'AssignIssue'
         const options = {
           speechText: 'I didnt get the assignee name. Can you repeat the name ?',
@@ -61,17 +66,12 @@ exports.handler = (event, context) => {
       assignRequest(opts, context, session)
     } else if (request.intent.name === 'WhoAMI') {
       whomiRequest(null, context)
-    } else if (request.intent.name === 'AMAZON.StopIntent') {
-      context.succeed(responseBuilder({
-        speechText: 'Good Bye !!',
-        endSession: true
-      }))
     } else if (request.intent.name === 'IssueCount') {
-      let options = {}
-      options.session = session
-      options.session.attributes.IssueCount = true
-      options.endSession = false
-      issueCountRequest(null, options, context)
+      // let options = {}
+      // options.session = session
+      // options.session.attributes.IssueCount = true
+      // options.endSession = false
+      issueCountRequest(context, session)
     } else if (request.intent.name === 'IssueCountDetails') {
       issueCountDetailsRequest(null, context, session)
     } else if (session.attributes.intent === 'ChangeStatus' || request.intent.name === 'ChangeStatus') {
@@ -91,24 +91,11 @@ exports.handler = (event, context) => {
         status
       }
       changeStatusRequest(opts, context, session)
-    } else {
-      const text = (session.attributes.jiraid) ? `do you want to do something with jira id ${session.attributes.jiraid}` : `Can you repeat that ?`
-      context.succeed(responseBuilder({
-        speechText: `Sorry I dont understand, ${text}`,
-        endSession: false,
-        session
-      }))
     }
   } else if (request.type === 'SessionEndedRequest') {
     context.succeed(responseBuilder({
-      speechText: 'Good Bye !!',
+      speechText: 'Good Bye !!, All the best for your presentation !!',
       endSession: true
     }))
   }
-  // else {
-  //   context.succeed(responseBuilder({
-  //     speechText: 'Sorry I dont understand, can you repeat that ?',
-  //     endSession: false
-  //   }))
-  // }
 }

@@ -22,7 +22,7 @@ const options = (opts) => ({
 })
 console.log('CHANGE STATUS OPTIONS :: ', options)
 const alexaResponse = (opts, session) => ({
-  speechText: `Status of Jira id,  ${opts.jiraId},  has been changed to ${opts.status}, Anything else I can help you with ?`,
+  speechText: `Status of Jeera id,  ${opts.jiraId},  has been changed to ${opts.status}, Anything else I can help you with ?`,
   endSession: false,
   session
 })
@@ -32,7 +32,7 @@ const req = (opts, context, session) => {
   opts.transition = transition
   request(options(opts))
     .then(response => {
-      session.attributes.assignee = {}
+      delete session.attributes.intent
       context.succeed(responseBuilder(alexaResponse(opts, session)))
     })
     .catch(() => {
