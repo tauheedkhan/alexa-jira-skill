@@ -27,13 +27,14 @@ const alexaResponse = (opts, session) => ({
 })
 
 const req = (opts, context, session) => {
-  opts.assigneeId = assigneeMapper[opts.assignee.toLowerCase()]
+  opts.assigneeId = assigneeMapper[opts.assignee]
   request(options(opts))
     .then(response => {
+      session.attributes.intent = null
       context.succeed(responseBuilder(alexaResponse(opts, session)))
     })
     .catch(() => {
-      const text = (session.attributes.jiraid) ? `Are you trying to do something with jira id ${session.attributes.jiraid}` : `I dont get it, what was that ?`
+      const text = `There was a problem, can you repeat jira id please ?`
       const alexaRes = {
         speechText: text,
         endSession: false,

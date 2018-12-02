@@ -28,14 +28,16 @@ const alexaResponse = (opts, session) => ({
 })
 
 const req = (opts, context, session) => {
-  const transition = getTransition[opts.status.toLowerCase()]
+  const transition = getTransition[opts.status]
   opts.transition = transition
   request(options(opts))
     .then(response => {
+      session.attributes.assignee = {}
       context.succeed(responseBuilder(alexaResponse(opts, session)))
     })
     .catch(() => {
-      const text = (session.attributes.jiraid) ? `Are you trying to do something with jira id ${session.attributes.jiraid}` : `I dont get it, what was that ?`
+      session.attributes.intent = 'ChangeStatus'
+      const text = `There was a problem, can you repeat jira id please ?`
       const alexaRes = {
         speechText: text,
         endSession: false,

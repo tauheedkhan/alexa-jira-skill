@@ -6,7 +6,6 @@ const {req: issueCountRequest} = require('./src/issueCount')
 const {req: issueCountDetailsRequest} = require('./src/issueCountDetails')
 const {req: changeStatusRequest} = require('./src/changeStatus')
 const getAssignee = require('./src/assigneeMapper')
-const {path} = require('./src/helper')
 
 const projectKey = process.env.PROJECT_KEY
 
@@ -26,11 +25,25 @@ exports.handler = (event, context) => {
     }
     context.succeed(responseBuilder(options))
   } else if (request.type === 'IntentRequest') {
-    if (session.attributes.intent === 'AssignIssue' || request.intent.name === 'AssignIssue') {
-      const jiraId = (path(['request', 'intent', 'slots', 'jiraid', 'value'])) || session.attributes.jiraid
-      const assignee = (path(['request', 'intent', 'slots', 'name', 'value'])) || session.attributes.assignee
+    if (request.intent.name === 'AMAZON.FallbackIntent') {
+      context.succeed(responseBuilder({
+        speechText: 'Sorry I dont understand, can you repeat that ?',
+        endSession: false
+      }))
+    } else if (session.attributes.intent === 'AssignIssue' || request.intent.name === 'AssignIssue') {
+      if (!request.intent.slots.jiraid) {
+        request.intent.slots.jiraid = {}
+      }
+      if (!request.intent.slots.name) {
+        request.intent.slots.name = {}
+      }
+      const jiraId = (request.intent.slots.jiraid.value) || session.attributes.jiraid
+      const assignee = (request.intent.slots.name.value) || session.attributes.assignee
       session.attributes.jiraid = jiraId
+      console.log('assignee', assignee)
+      console.log('getAssignee', getAssignee[assignee])
       if (!getAssignee[assignee]) {
+        console.log('Entered If....')
         session.attributes.intent = 'AssignIssue'
         const options = {
           speechText: 'I didnt get the assignee name. Can you repeat the name ?',
@@ -53,11 +66,6 @@ exports.handler = (event, context) => {
         speechText: 'Good Bye !!',
         endSession: true
       }))
-    } else if (request.type === 'AMAZON.FallbackIntent') {
-      context.succeed(responseBuilder({
-        speechText: 'Sorry I dont understand, can you repeat that ?',
-        endSession: false
-      }))
     } else if (request.intent.name === 'IssueCount') {
       let options = {}
       options.session = session
@@ -66,10 +74,17 @@ exports.handler = (event, context) => {
       issueCountRequest(null, options, context)
     } else if (request.intent.name === 'IssueCountDetails') {
       issueCountDetailsRequest(null, context, session)
-    } else if (request.intent.name === 'ChangeStatus') {
-      const jiraId = (request.intent.slots.ticket.value) || session.attributes.jiraid
+    } else if (session.attributes.intent === 'ChangeStatus' || request.intent.name === 'ChangeStatus') {
+      if (!request.intent.slots.jiraid) {
+        request.intent.slots.jiraid = {}
+      }
+      if (!request.intent.slots.status) {
+        request.intent.slots.status = {}
+      }
+      const jiraId = (request.intent.slots.jiraid.value) || session.attributes.jiraid
+      const status = (request.intent.slots.status.value) || session.attributes.status
       session.attributes.jiraid = jiraId
-      const status = request.intent.slots.status.value
+      session.attributes.status = status
       const opts = {
         projectKey,
         jiraId,
