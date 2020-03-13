@@ -1,2 +1,2 @@
 # alexa-skill
-Alexa skill for Jira.
+Alexa skill for Jira
