@@ -1,7 +1,7 @@
 {
   "name": "alexa-jira-skill",
   "version": "1.0.0",
-  "description": "Alexa Jira skill prototype",
+  "description": "Alexa Jira skill prototype.",
   "main": "index.js",
   "scripts": {
     "test": "lambda-local -l index.js -h handler -e test/event.json",
